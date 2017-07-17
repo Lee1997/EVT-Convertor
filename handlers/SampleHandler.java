@@ -19,13 +19,11 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.part.FileEditorInput;
 
+import evtconvertor.parcel.Manager;
 import evtconvertor.parcel.Parser;
+import evtconvertor.specs.ContextSpec;
+import evtconvertor.specs.Spec;
 
-/**
- * Our sample handler extends AbstractHandler, an IHandler base class.
- * @see org.eclipse.core.commands.IHandler
- * @see org.eclipse.core.commands.AbstractHandler
- */
 public class SampleHandler extends AbstractHandler {
 	
 	private void initialisation() {
@@ -37,11 +35,11 @@ public class SampleHandler extends AbstractHandler {
 		
 		//Create a new parser object
 		Parser parser = new Parser(evtCode);
+		//Parse the file currently open
 		parser.init();
 		
-		for(int i = 0; i < parser.getSpecs().size(); i++) {
-			System.out.println(parser.getSpecs().get(i).toString());
-		}
+		Manager manager = new Manager(parser.getSpecs(), evtCode);
+		
 		
 	}
 	
@@ -68,7 +66,9 @@ public class SampleHandler extends AbstractHandler {
 		ArrayList<String> lines = new ArrayList<String>();
 
 		while (sc.hasNextLine()) {
-		  lines.add(sc.nextLine().trim());
+			String line = sc.nextLine();
+			line = line.trim();
+			lines.add(line);
 		}
 		sc.close();
 		return lines;
