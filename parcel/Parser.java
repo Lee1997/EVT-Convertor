@@ -11,6 +11,7 @@ import evtconvertor.specs.Spec;
 public class Parser {
 	
 	private static ArrayList<String> evtCode;
+	private static String alert = "Converted"; // This will change if there is errors
 	private String currentLogic;
 	private ArrayList<Spec> genericSpecs; //This will store the specs before we know what type they are
 	private ArrayList<Spec> specs; // This will store the final specs
@@ -37,11 +38,31 @@ public class Parser {
 		//Each time a spec is found and specified, it is add to specs and removed from genericSpecs
 		//So hopefully at this point genericSpecs will be fully depleted and specs will have the total number
 		
+		//Sets the bool and context files are completed.
+		//Completed in the sense of they will not need any inheritance.
+		//No files are created in this code, it's all internal.
+		setBoolContext();
+		
+		//
 		manageInheritance();
 		
 	}
 	
 	public void manageInheritance() {
+		//Loop through each spec and get everything from their 
+		
+		for(int i = 0; i < specs.size(); i++) {
+			Spec spec = specs.get(i);
+			System.out.println(spec.getName() + ": " + spec.getClass().toString());
+			if(spec.getClass().toString().contains("CarrierSpec")) {
+				System.out.println("Variables of " + spec.getName());
+				for(Variable v : spec.getVariables())
+					System.out.println();
+			}
+		}
+	}
+	
+	public void setBoolContext() {
 		
 		//Declare all the bool and context files as completed
 		for(int i = 0; i < specs.size(); i++) {
@@ -56,9 +77,7 @@ public class Parser {
 					spec.setMade(true);
 				}
 			}
-		}
-		
-		
+		}	
 	}
 	
 	private void findMachineSpecs() {
@@ -121,7 +140,7 @@ public class Parser {
 				String set = line.substring(10, line.indexOf("::="));
 				line = line.substring(line.indexOf("::=") + 3);
 				
-				ArrayList<String> constants = (ArrayList<String>) Arrays.asList(line.split("|"));
+				ArrayList<String> constants = new ArrayList<>(Arrays.asList(line.split("|")));
 				
 				contextSpec.setSet(set);
 				contextSpec.setConstants(constants);
@@ -163,6 +182,14 @@ public class Parser {
 				specC = 0;
 			}
 		}
+	}
+	
+	private boolean isMade(String name) {
+		for(int i = 0; i < specs.size(); i++) {
+			if(specs.get(i).getName().equals(name))
+				return specs.get(i).isMade();
+		}
+		return false;
 	}
 	
 	private void collectSpecs() {

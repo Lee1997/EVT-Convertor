@@ -8,9 +8,7 @@ import evtconvertor.parcel.Variable;
 
 public class CarrierSpec extends Spec{
 	
-	private ArrayList<Variable> variables;
-	private ArrayList<Invariant> invariants;
-	private ArrayList<String> operations;
+
 	private String logic;
 	private String name;
 	private String operator;
@@ -26,9 +24,7 @@ public class CarrierSpec extends Spec{
 		this.startLine = startLine;
 		this.endLine = endLine;
 		this.parentSpecString = parentSpecString;
-		variables = new ArrayList<Variable>();
-		operations = new ArrayList<String>();
-		invariants = new ArrayList<Invariant>();
+
 		
 		searchOperations();
 	}
@@ -68,22 +64,6 @@ public class CarrierSpec extends Spec{
 	
 	private void addVariable(Variable variable) {
 		variables.add(variable);
-	}
-
-	public ArrayList<Variable> getVariables() {
-		return variables;
-	}
-
-	public void setVariables(ArrayList<Variable> variables) {
-		this.variables = variables;
-	}
-
-	public ArrayList<Invariant> getInvariants() {
-		return invariants;
-	}
-
-	public void setInvariants(ArrayList<Invariant> invariants) {
-		this.invariants = invariants;
 	}
 
 	public String getParentSpecString() {

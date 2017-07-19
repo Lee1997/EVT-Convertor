@@ -1,5 +1,10 @@
 package evtconvertor.specs;
 
+import java.util.ArrayList;
+
+import evtconvertor.parcel.Invariant;
+import evtconvertor.parcel.Variable;
+
 public class Spec {
 	
 	private String logic;
@@ -9,7 +14,10 @@ public class Spec {
 	private int startLine;
 	private int endLine;
 	private String type;
-	private boolean isMade;	
+	private boolean isMade;
+	protected ArrayList<Variable> variables;
+	protected ArrayList<Invariant> invariants;
+	protected ArrayList<String> operations;
 	
 	public Spec(String logic, String name, String parentSpecString, String operator, int startLine, int endLine){
 		this.logic = logic.trim();
@@ -19,6 +27,9 @@ public class Spec {
 		this.endLine = endLine;
 		this.parentSpecString = parentSpecString;
 		isMade = false;
+		variables = new ArrayList<Variable>();
+		invariants = new ArrayList<Invariant>();
+		operations = new ArrayList<String>();
 	}
 	
 	@Override
@@ -96,6 +107,22 @@ public class Spec {
 
 	public void setMade(boolean isMade) {
 		this.isMade = isMade;
+	}
+
+	public ArrayList<Variable> getVariables() {
+		return variables;
+	}
+
+	public void setVariables(ArrayList<Variable> variables) {
+		this.variables = variables;
+	}
+
+	public ArrayList<Invariant> getInvariants() {
+		return invariants;
+	}
+
+	public void setInvariants(ArrayList<Invariant> invariants) {
+		this.invariants = invariants;
 	}
 	
 }
